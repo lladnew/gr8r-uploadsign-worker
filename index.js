@@ -1,5 +1,7 @@
-//gr8r-uploadsign-worker
+//gr8r-uploadsign-worker v1.0.1
+//added title sanitization for safe URL
 // initial code for worker testing
+
 export default {
   async fetch(request, env, ctx) {
     if (request.method !== "POST") {
@@ -13,11 +15,24 @@ export default {
     }
 
     try {
-      const { objectKey, contentType } = await request.json();
+   const { title, contentType } = await request.json();
 
-      if (!objectKey || !contentType) {
-        return new Response("Missing objectKey or contentType", { status: 400 });
-      }
+if (!title || !contentType) {
+  return new Response("Missing title or contentType", { status: 400 });
+}
+
+function sanitizeTitleForFilename(title) {
+  return title
+    .trim()
+    .replace(/[\/\\?%*:|"<>']/g, '')
+    .replace(/\s+/g, '-')
+    .toLowerCase();
+}
+
+const fileExt = contentType === "video/mp4" ? "mp4" : "mov";
+const sanitizedTitle = sanitizeTitleForFilename(title);
+const objectKey = `${sanitizedTitle}.${fileExt}`;
+
 
       const signed = await env.VIDEO_BUCKET.createPresignedUrl(objectKey, {
         method: "PUT",
