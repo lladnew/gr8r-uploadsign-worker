@@ -1,0 +1,11 @@
+name = "gr8r-uploadsign-worker"
+main = "src/index.js"
+compatibility_date = "2025-07-11"
+workers_dev = false
+account_id = "6a22f9b8ad27ffcc9719dd53a78bcedf"
+route = "https://uploads.gr8r.com/*"
+zone_id = "4d5a84970fb92290aef35be4f6759917"
+
+[[r2_buckets]]
+binding = "VIDEO_BUCKET"
+bucket_name = "videos-gr8r"
