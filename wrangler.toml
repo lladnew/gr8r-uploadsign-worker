@@ -1,5 +1,5 @@
 name = "gr8r-uploadsign-worker"
-main = "src/index.js"
+main = "index.js"
 compatibility_date = "2025-07-11"
 workers_dev = false
 account_id = "6a22f9b8ad27ffcc9719dd53a78bcedf"
